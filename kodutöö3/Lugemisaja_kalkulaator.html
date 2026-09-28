@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Lugemisaja kalkulaator</title>
+
+    <script>
+      function arvutus() {
+        vastus.innerText = "Raamatu lugemiseks kulub umbes "
+          + (leheküljed.valueAsNumber / kiirus.valueAsNumber).toFixed(1)
+          + " tundi";
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <h1>Lugemisaja kalkulaator</h1>
+
+    <p>Mitu lehekülge on raamatus?</p>
+    <input type="number" id="leheküljed" />
+
+    <p>Mitu lehekülge loed tunnis?</p>
+    <input type="number" id="kiirus" />
+
+    <input type="button" value="Arvuta" onclick="arvutus()" />
+
+    <p id="vastus">Vastuse koht</p>
+
+    <a href="index.html">← Tagasi avalehele</a>
+
+  </body>
+</html>
