@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Bookworm</title>
-    
-      <style>
+
+    <style>
       body {
         background-color: #887662;
       }
@@ -15,55 +15,72 @@
 
       h2 {
         color: #37261f;
-        margin: 30px
+        margin: 30px;
       }
-        .sisu {
-  text-align: center;
-}
-        .kaks-osa {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-        .gromit {
+
+      .kaks-osa {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .pealkiri {
+        text-align: center;
+      }
+
+      .sisukord {
+        text-align: left;
+      }
+
+      .gromit {
+        width: 200px;
         margin-right: 30px;
       }
 
       .raamatud {
         display: block;
         margin: 30px auto;
+        width: 300px;
       }
     </style>
   </head>
+
   <body>
-    
-   <div class="kaks-osa">
-      <div> 
-<div class ="sisu">
-    <h1>Lugemisklubi Bookworm</h1>
-  </div>
-        </div>
-    
-   
-    <h2>Sisukord</h2>
-    <nav>
-      <ul>
-     <li><a href="Kuu_raamat.html">Kuu raamat</a></li>
-    <li><a href="soovitused.html">Soovitused</a></li>
-    <li><a href="Lugemisaja_kalkulaator.html">Lugemisaja Kalkulaator</a></li>
-  </ul>
-</nav>
-       
+
+    <div class="kaks-osa">
+
+      <!-- SISUKORD VASAKUL -->
+      <div class="sisukord">
+        <h2>Sisukord</h2>
+
+        <nav>
+          <ul>
+            <li><a href="Kuu_raamat.html">Kuu raamat</a></li>
+            <li><a href="soovitused.html">Soovitused</a></li>
+            <li><a href="Lugemisaja_kalkulaator.html">Lugemisaja Kalkulaator</a></li>
+          </ul>
+        </nav>
+      </div>
+
+
+      <!-- PEALKIRI KESKEL -->
+      <div class="pealkiri">
+        <h1>Lugemisklubi Bookworm</h1>
+      </div>
+
+
+      <!-- GROMIT PAREMAL -->
       <div>
-    <img src="gromit.png" width="200"/>
-  </div>
-</div>
-    
-</div>
-      
-  <div class ="sisu">
-    <img src="raamatud1.png" width="300"/>
-</div>
-  
+        <img src="gromit.png" class="gromit"/>
+      </div>
+
+    </div>
+
+
+    <!-- RAAMATUD KESKEL -->
+    <div>
+      <img src="raamatud1.png" class="raamatud"/>
+    </div>
+
   </body>
 </html>
