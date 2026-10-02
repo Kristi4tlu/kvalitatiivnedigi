@@ -30,8 +30,10 @@ fetch("https://script.google.com/macros/s/AKfycbyRytRC0viTHpfAkzD-gNaFw23hpmszRc
 
     function kuva(kohad) {
       console.log(kohad);
-      for (let koht of kohad) {
 
+     for (let nr = 1; nr < kohad.length; nr++) {
+      let koht = kohad[nr];
+      
         L.marker([koht[0], koht[1]])
           .addTo(kaart)
           .bindPopup(koht[2]);
