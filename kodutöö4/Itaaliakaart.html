@@ -24,19 +24,19 @@
 
    
 fetch("https://script.google.com/macros/s/AKfycbyRytRC0viTHpfAkzD-gNaFw23hpmszRcaWi7wj27_Y9PTDPcjHzAt1RdV8ig4BCi5X/exec")
-        .then(vastus => vastus.json())
-        .then(andmed => {
+        .then(d => d.json()).then(kuva);
+          f console.log("tellitud");
+    }
 
-          for(let nr = 1; nr < andmed.length; nr++){
+    function kuva(kohad) {
+      console.log(kohad);
+      for (let koht of kohad) {
 
-            let koht = andmed[nr][0];
-            let laius = andmed[nr][1];
-            let pikkus = andmed[nr][2];
-
-            L.marker([laius, pikkus])
-              .addTo(kaart)
-              .bindPopup(koht);
-          }
+        L.marker([koht[0], koht[1]])
+          .addTo(kaart)
+          .bindPopup(koht[2]);
+      }
+    }
 </script>
    
  </head>  
