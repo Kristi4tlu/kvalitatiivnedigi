@@ -12,14 +12,20 @@
  </style>
    
  <script>
-   var kaart;
-   var hypik;
+   let kaart;
+   let hypik;
+	 let marker1, marker2;
    function algus(){
     kaart = L.map('kaardikiht').setView([59.4339, 24.9467], 12);
       new L.TileLayer(  'https://tiles.maaamet.ee/tm/tms/1.0.0/hybriid@GMC/{z}/{x}/{y}.png&ASUTUS=TLU&ERIALA=DIGIHUMANITAARIA', {
 	  attribution: "Map: <a  href='http://www.maaamet.ee/'>Maa-amet</a>",
 	  tms: true,
     }).addTo(kaart);
+	   marker1=L.marker([59.4339, 24.9467], {draggable, true});
+	   marker2=L.marker([59.4339, 24.9467], {draggable, true});
+	   marker1.addTo(kaart);
+	   marker2.addTo(kaart);
+	   
 
    	hypik=L.popup(); 
 	kaart.on("click", vajutus);
