@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
  <head>
+  
  <title>Itaaliakaart</title>
+  
  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" />
+  
  <style>
    body {padding: 0; margin: 0; }
    html, body { height: 100%; width: 100%;}
@@ -18,20 +21,22 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(kaart);
-   
-L.marker([41.9028, 12.4964])
-      .addTo(kaart)
-      .bindPopup("Rooma");
 
-    L.marker([45.4642, 9.1900])
-      .addTo(kaart)
-      .bindPopup("Milano");
-
-    L.marker([43.7696, 11.2558])
-      .addTo(kaart)
-      .bindPopup("Firenze");
    
-  }
+fetch("https://script.google.com/macros/s/AKfycbyRytRC0viTHpfAkzD-gNaFw23hpmszRcaWi7wj27_Y9PTDPcjHzAt1RdV8ig4BCi5X/exec")
+        .then(vastus => vastus.json())
+        .then(andmed => {
+
+          for(let nr = 1; nr < andmed.length; nr++){
+
+            let koht = andmed[nr][0];
+            let laius = andmed[nr][1];
+            let pikkus = andmed[nr][2];
+
+            L.marker([laius, pikkus])
+              .addTo(kaart)
+              .bindPopup(koht);
+          }
 </script>
    
  </head>  
