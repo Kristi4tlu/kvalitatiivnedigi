@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script>
+      function kysi(){
+        let lause=
+          SELECT ?item ?itemLabel
+          WHERE
+          {
+            ?item wdt:P27 wd:Q191. # nt sugu mees ja asukoht eesti 
+            ?item wdt:P106 wd:Q33999. # amet laulja 
+            SERVICE wikibase:label {
+              bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en".
+            } 
+          }
+          LIMIT 20
+       `;
+        let aadress="https://query.wikidata.org/sparql?format=json&query="+encodeURI(lause);      
+           fetch(aadress).then(d => d.json()).then(kuva);
+       }
+        function kuva(d){
+           console.log(d);
+        }
+     </script>
+  </head>
+  <body>
+     <input type="button" value="otsi" onclick="kysi()" />
+     <div id="vastus"></div>
+  </body>
+</html>
