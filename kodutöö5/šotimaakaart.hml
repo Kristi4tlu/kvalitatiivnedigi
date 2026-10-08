@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  
+ <title>Šotimaakaart</title>
+  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" />
+  
+ <style>
+   body {padding: 0; margin: 0; }
+   html, body { height: 100%; width: 100%;}
+   img { border: 0;}
+   #kaardikiht {float:bottom; width:100%; height:100%;}
+ </style>
+   
+ <script>
+  var kaart;
+  function algus(){
+    kaart = L.map('kaardikiht').setView([56.8, -4.2], 7]);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(kaart);
+
+   
+fetch("https://script.google.com/macros/s/AKfycbzCVD8jlFebzNe0mjbLmzFFx77g5sSiuqNsRclWDnvseeuQtVCkYzJRneI-c-dw9JLZaw/exec")
+        .then(d => d.json()).then(kuva);
+          console.log("tellitud");
+    }
+
+    function kuva(kohad) {
+      console.log(kohad);
+
+     for (let nr = 1; nr < kohad.length; nr++) {
+      let koht = kohad[nr];
+      
+        L.marker([koht[0], koht[1]])
+          .addTo(kaart)
+          .bindPopup(koht[2]);
+      }
+    }
+</script>
+ </head>  
+ <body onload="algus()">
+  <div id="kaardikiht"></div>
+ </body>
+</html>
