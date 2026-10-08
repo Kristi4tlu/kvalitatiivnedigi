@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
  <head>
   
@@ -8,15 +7,31 @@
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" />
   
  <style>
-   body {padding: 0; margin: 0; }
-   html, body { height: 100%; width: 100%;}
-   img { border: 0;}
-   #kaardikiht {float:bottom; width:100%; height:100%;}
+   body {
+     padding: 0;
+     margin: 0;
+   }
+
+   html, body {
+     height: 100%;
+     width: 100%;
+   }
+
+   img {
+     border: 0;
+   }
+
+   #kaardikiht {
+     float: bottom;
+     width: 100%;
+     height: 100%;
+   }
  </style>
    
 <script>
   var kaart;
   var kohad = [];
+  var jooned;
 
   function algus(){
     kaart = L.map('kaardikiht').setView([56.8, -4.2], 7);
@@ -24,6 +39,8 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(kaart);
+
+    jooned = L.layerGroup().addTo(kaart);
 
     fetch("https://script.google.com/macros/s/AKfycbzCVD8jlFebzNe0mjbLmzFFx77g5sSiuqNsRclWDnvseeuQtVCkYzJRneI-c-dw9JLZaw/exec")
       .then(d => d.json())
@@ -51,9 +68,26 @@
       .addTo(kaart)
       .bindPopup("Sinu valitud asukoht")
       .openPopup();
+
+    jooned.clearLayers();
+
+    for (let nr = 1; nr < kohad.length; nr++) {
+      let koht = kohad[nr];
+
+      let kaugus = valitud.distanceTo([koht[0], koht[1]]);
+      let kaugusKm = (kaugus / 1000).toFixed(1);
+
+      L.polyline([
+        valitud,
+        [koht[0], koht[1]]
+      ])
+      .addTo(jooned)
+      .bindPopup(koht[2] + ": " + kaugusKm + " km");
+    }
   }
 </script>
  </head>  
+
  <body onload="algus()">
   <div id="kaardikiht"></div>
  </body>
