@@ -18,6 +18,7 @@
   var kaart;
   var kohad = [];
   var jooned;
+  var valitudMarker;
 
   function algus(){
     kaart = L.map('kaardikiht').setView([56.8, -4.2], 7);
@@ -48,16 +49,41 @@
   }
 
   function vajutus(e) {
-    let valitud = e.latlng;
 
-    L.marker(valitud)
+    // Kui markerit veel ei ole, siis loome selle
+    if (valitudMarker == null) {
+
+      valitudMarker = L.marker(e.latlng, {
+        draggable: true
+      })
       .addTo(kaart)
       .bindPopup("Sinu valitud asukoht")
       .openPopup();
 
+      // Kui markerit liigutatakse, käivita liikumine
+      valitudMarker.on("dragend", liikumine);
+
+    } else {
+
+      // Kui marker on juba olemas, liiguta see uude klikitud kohta
+      valitudMarker.setLatLng(e.latlng);
+
+    }
+
+    liikumine();
+  }
+
+  function liikumine() {
+
+    // Saame liigutatava markeri uue asukoha
+    let valitud = valitudMarker.getLatLng();
+
+    // Kustutame vanad teed
     jooned.clearLayers();
 
+    // Iga tabelis oleva koha jaoks uus marsruut
     for (let nr = 1; nr < kohad.length; nr++) {
+
       let koht = kohad[nr];
 
       let aadress =
@@ -73,21 +99,21 @@
   }
 
   function kuvaTee(andmed) {
+
     let tee = andmed.routes[0];
 
     let kaugusKm = (tee.distance / 1000).toFixed(1);
 
-    console.log("Sõidutee pikkus:", kaugusKm, "km");
+    console.log("Sõidutee:", kaugusKm, "km");
     console.log("Sõiduaeg:", tee.duration);
 
     L.geoJSON(tee.geometry)
       .addTo(jooned)
       .bindPopup("Sõidutee: " + kaugusKm + " km");
   }
+
 </script>
-
  </head>  
-
  <body onload="algus()">
   <div id="kaardikiht"></div>
  </body>
