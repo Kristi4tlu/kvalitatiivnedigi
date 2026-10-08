@@ -45,12 +45,13 @@ kaart.on("click", vajutus);
   }
 }
    function vajutus(e) {
-  L.marker(e.latlng)
+  let valitud = e.latlng;
+
+  L.marker(valitud)
     .addTo(kaart)
     .bindPopup("Sinu valitud asukoht")
     .openPopup();
 }
-  
 </script>
  </head>  
  <body onload="algus()">
