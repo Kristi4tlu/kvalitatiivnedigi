@@ -61,7 +61,7 @@
       .addTo(kaart)
       .bindPopup("Sinu valitud asukoht")
       .openPopup();
-      valitudMarker.on("dragend", liikumine);
+      valitudMarker.on("dragend", salvesta);
 
     } else {
 
@@ -104,6 +104,20 @@
     L.geoJSON(tee.geometry)
       .addTo(jooned);
   }
+ 
+ function salvesta() {
+
+  let asukoht = valitudMarker.getLatLng();
+
+  let aadress =
+    "SINU_APPS_SCRIPT_URL" +
+    "?laiuskraad=" + asukoht.lat +
+    "&pikkuskraad=" + asukoht.lng;
+
+  fetch(aadress);
+
+  liikumine();
+}
 
 </script>
 
