@@ -16,6 +16,8 @@
    
  <script>
   var kaart;
+  var kohad = [];
+  
   function algus(){
     kaart = L.map('kaardikiht').setView([56.8, -4.2], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -24,21 +26,30 @@
 
    
 fetch("https://script.google.com/macros/s/AKfycbzCVD8jlFebzNe0mjbLmzFFx77g5sSiuqNsRclWDnvseeuQtVCkYzJRneI-c-dw9JLZaw/exec")
-        .then(d => d.json()).then(kuva);
-          console.log("tellitud");
+  .then(d => d.json()).then(kuva);
+console.log("tellitud");
+kaart.on("click", vajutus);
+   
     }
 
-    function kuva(kohad) {
-      console.log(kohad);
+   function kuva(andmed) {
+  kohad = andmed;
+  console.log(kohad);
 
-     for (let nr = 1; nr < kohad.length; nr++) {
-      let koht = kohad[nr];
-      
-        L.marker([koht[0], koht[1]])
-          .addTo(kaart)
-          .bindPopup(koht[2]);
-      }
-    }
+  for (let nr = 1; nr < kohad.length; nr++) {
+    let koht = kohad[nr];
+    
+    L.marker([koht[0], koht[1]])
+      .addTo(kaart)
+      .bindPopup(koht[2]);
+  }
+    function vajutus(e) {
+  L.marker(e.latlng)
+    .addTo(kaart)
+    .bindPopup("Sinu valitud asukoht")
+    .openPopup();
+}
+}
 </script>
  </head>  
  <body onload="algus()">
