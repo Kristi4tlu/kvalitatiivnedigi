@@ -43,13 +43,14 @@ kaart.on("click", vajutus);
       .addTo(kaart)
       .bindPopup(koht[2]);
   }
-    function vajutus(e) {
+}
+   function vajutus(e) {
   L.marker(e.latlng)
     .addTo(kaart)
     .bindPopup("Sinu valitud asukoht")
     .openPopup();
 }
-}
+  
 </script>
  </head>  
  <body onload="algus()">
