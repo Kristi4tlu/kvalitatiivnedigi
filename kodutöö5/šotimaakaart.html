@@ -47,6 +47,15 @@ kaart.on("click", vajutus);
    function vajutus(e) {
   let valitud = e.latlng;
 
+    for (let nr = 1; nr < kohad.length; nr++) {
+    let koht = kohad[nr];
+
+    let kaugus = valitud.distanceTo([koht[0], koht[1]]);
+
+    console.log(koht[2], kaugus);
+  }
+
+
   L.marker(valitud)
     .addTo(kaart)
     .bindPopup("Sinu valitud asukoht")
