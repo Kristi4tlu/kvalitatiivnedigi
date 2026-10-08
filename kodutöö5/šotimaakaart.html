@@ -8,10 +8,13 @@
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" />
   
  <style>
-   body {padding: 0; margin: 0; }
-   html, body { height: 100%; width: 100%;}
-   img { border: 0;}
-   #kaardikiht {float:bottom; width:100%; height:100%;}
+   body {padding: 0; margin: 0;}
+   html, body {height: 100%; width: 100%;}
+   img {border: 0;}
+   #kaardikiht {float: left; width: 80%; height: 100%;}
+
+   #selgitus {float: right; width: 20%; height: 100%; overflow-y: auto; 
+              background-color: white; padding: 10px; box-sizing: border-box;}
  </style>
    
 <script>
@@ -21,8 +24,8 @@
   var valitudMarker;
 
   function algus(){
-    kaart = L.map('kaardikiht').setView([56.8, -4.2], 7);
 
+    kaart = L.map('kaardikiht').setView([56.8, -4.2], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(kaart);
@@ -36,36 +39,32 @@
     kaart.on("click", vajutus);
   }
 
-  function kuva(andmed) {
-    kohad = andmed;
 
+  function kuva(andmed) {
+
+    kohad = andmed;
     for (let nr = 1; nr < kohad.length; nr++) {
       let koht = kohad[nr];
-
       L.marker([koht[0], koht[1]])
         .addTo(kaart)
         .bindPopup(koht[2]);
     }
   }
 
+
   function vajutus(e) {
 
-    // Kui markerit veel ei ole, siis loome selle
     if (valitudMarker == null) {
-
       valitudMarker = L.marker(e.latlng, {
         draggable: true
       })
       .addTo(kaart)
       .bindPopup("Sinu valitud asukoht")
       .openPopup();
-
-      // Kui markerit liigutatakse, käivita liikumine
       valitudMarker.on("dragend", liikumine);
 
     } else {
 
-      // Kui marker on juba olemas, liiguta see uude klikitud kohta
       valitudMarker.setLatLng(e.latlng);
 
     }
@@ -73,19 +72,14 @@
     liikumine();
   }
 
+
   function liikumine() {
 
-    // Saame liigutatava markeri uue asukoha
     let valitud = valitudMarker.getLatLng();
-
-    // Kustutame vanad teed
     jooned.clearLayers();
-
-    // Iga tabelis oleva koha jaoks uus marsruut
+    selgitus.innerHTML = "<h2>Sõidutee kaugused</h2>";
     for (let nr = 1; nr < kohad.length; nr++) {
-
       let koht = kohad[nr];
-
       let aadress =
         "https://router.project-osrm.org/route/v1/driving/" +
         valitud.lng + "," + valitud.lat + ";" +
@@ -94,27 +88,35 @@
 
       fetch(aadress)
         .then(d => d.json())
-        .then(kuvaTee);
+        .then(andmed => kuvaTee(andmed, koht[2]));
     }
   }
 
-  function kuvaTee(andmed) {
+
+  function kuvaTee(andmed, kohaNimi) {
 
     let tee = andmed.routes[0];
-
     let kaugusKm = (tee.distance / 1000).toFixed(1);
-
-    console.log("Sõidutee:", kaugusKm, "km");
-    console.log("Sõiduaeg:", tee.duration);
+    selgitus.innerHTML +=
+      "<p><b>" + kohaNimi + "</b><br>" +
+      kaugusKm + " km</p>";
 
     L.geoJSON(tee.geometry)
-      .addTo(jooned)
-      .bindPopup("Sõidutee: " + kaugusKm + " km");
+      .addTo(jooned);
   }
 
 </script>
+
  </head>  
+
  <body onload="algus()">
+
   <div id="kaardikiht"></div>
+
+  <div id="selgitus">
+    <h2>Sõidutee kaugused</h2>
+    <p>Kliki kaardil, et valida asukoht.</p>
+  </div>
+
  </body>
 </html>
