@@ -60,18 +60,32 @@
     for (let nr = 1; nr < kohad.length; nr++) {
       let koht = kohad[nr];
 
-      let kaugus = valitud.distanceTo([koht[0], koht[1]]);
-      let kaugusKm = (kaugus / 1000).toFixed(1);
+      let aadress =
+        "https://router.project-osrm.org/route/v1/driving/" +
+        valitud.lng + "," + valitud.lat + ";" +
+        koht[1] + "," + koht[0] +
+        "?overview=full&geometries=geojson";
 
-      L.polyline([
-        valitud,
-        [koht[0], koht[1]]
-      ])
-      .addTo(jooned)
-      .bindPopup(koht[2] + ": " + kaugusKm + " km");
+      fetch(aadress)
+        .then(d => d.json())
+        .then(kuvaTee);
     }
   }
+
+  function kuvaTee(andmed) {
+    let tee = andmed.routes[0];
+
+    let kaugusKm = (tee.distance / 1000).toFixed(1);
+
+    console.log("Sõidutee pikkus:", kaugusKm, "km");
+    console.log("Sõiduaeg:", tee.duration);
+
+    L.geoJSON(tee.geometry)
+      .addTo(jooned)
+      .bindPopup("Sõidutee: " + kaugusKm + " km");
+  }
 </script>
+
  </head>  
 
  <body onload="algus()">
