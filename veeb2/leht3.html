@@ -23,11 +23,11 @@
        
         function kuva(d){
            console.log(d);
-          vastus.innerHTML="";
+           vastus.innerHTML="";
            for(let rida of d["results"]["bindings"]){
               console.log(rida["itemLabel"]["value"]);
-             let lause=document.createElement("li");
-             lause.textContent=rida["itemLabel"]["value"];
+              let lause=document.createElement("li");
+              lause.textContent=rida["itemLabel"]["value"];
               vastus.textContent+=" "+rida["itemLabel"]["value"];
            }
         }
@@ -42,6 +42,7 @@
      </select>
         
      <input type="button" value="otsi" onclick="kysi()" />
-     <div id="vastus"></div>
+
+    <ul id="vastus"></ul>
   </body>
 </html>
