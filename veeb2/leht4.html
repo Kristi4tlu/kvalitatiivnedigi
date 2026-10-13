@@ -3,9 +3,6 @@
   <head>
      <script>
         function kysi(){ 
-           //Vaadake, milliseid ameteid (P106) on Wikidatas
-           //Võimaldage teisest rippmenüüst valida ametit
-           // (uuel lehel)
            let lause=`SELECT ?kool ?koolLabel (COUNT(*) as ?kogus) {
                 ?isik wdt:P27 wd:${riik.value}.
                 ?isik wdt:P106 wd:${amet.value}.
@@ -46,10 +43,8 @@
         <option value="Q34">Rootsi</option>
      </select>
      <select id="amet" onchange="kysi()">
-      <option value="Q193391">diplomaat</option>
-      <option value="Q333634">tõlkija</option>
-      <option value="Q201788">ajaloolane</option>
-      <option value="Q82955">poliitik</option>
+      <option value="Q1097498">valitseja</option>
+   
      </select>
      <input type="button" value="otsi" onclick="kysi()" />
  
