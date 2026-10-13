@@ -28,13 +28,19 @@ LIMIT 50
         function kuva(d){
            console.log(d);
            vastus.innerHTML="";
-           for(let rida of d["results"]["bindings"]){
-              console.log(rida["sõdaLabel"]["value"]);
-              let lause=document.createElement("li");
-              lause.textContent=rida["sõdaLabel"]["value"];
-              vastus.appendChild(lause);
-           }
-        }
+          
+          for (let rida of d["results"]["bindings"]) {
+          let element = document.createElement("li");
+          
+          //sõdade ja valitsejate mõlemate kuvamiseks  
+          element.textContent =
+          rida["isikLabel"]["value"] + " – " +
+          rida["sõdaLabel"]["value"];
+
+          vastus.appendChild(element);
+            
+            }
+          }
      </script>
   </head>
   <body>
