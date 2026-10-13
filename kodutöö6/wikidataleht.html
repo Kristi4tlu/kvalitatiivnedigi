@@ -3,16 +3,17 @@
   <head>
      <script>
         function kysi(){ 
-           let lause=`SELECT ?sõda ?sõdaLabel (COUNT(*) as ?kogus) {
-                ?isik wdt:P27 wd:${riik.value}.
-                ?isik wdt:P106 wd:${amet.value}.
-                ?isik wdt:P607 ?sõda.
-                SERVICE wikibase:label {
-                  bd:serviceParam wikibase:language "et,en".
-                } 
-              
-              } GROUP BY ?sõda ?sõdaLabel
-               ORDER BY DESC(?kogus)
+           let lause=`SELECT ?isik ?isikLabel ?sõda ?sõdaLabel
+WHERE {
+  ?isik wdt:P27 wd:${riik.value}.
+  ?isik wdt:P106 wd:${amet.value}.
+  ?isik wdt:P607 ?sõda.
+
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "et,en".
+  }
+}
+LIMIT 50
 
               LIMIT 20
            `;
