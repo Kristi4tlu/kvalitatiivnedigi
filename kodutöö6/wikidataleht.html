@@ -4,8 +4,8 @@
      <script>
         function kysi(){ 
            let lause=`SELECT ?sõda ?sõdaLabel (COUNT(*) as ?kogus) {
-                ?isik wdt:P27 wd:{riik.value}.
-                ?isik wdt:P106 wd:{amet.value}.
+                ?isik wdt:P27 wd:${riik.value}.
+                ?isik wdt:P106 wd:${amet.value}.
                 ?isik wdt:P607 ?sõda.
                 SERVICE wikibase:label {
                   bd:serviceParam wikibase:language "et,en".
@@ -17,7 +17,7 @@
               LIMIT 10
            `;
            console.log(lause);
-           let aadress="https://query.wikidata.org/sparql?format=json&query="+encodeURI(lause);  
+           let aadress="https://query.wikidata.org/sparql?format=json&query=" + encodeURI(lause);  
            vastus.innerHTML="ootan vastust";
            fetch(aadress).then(d => d.json()).then(kuva);
         }
