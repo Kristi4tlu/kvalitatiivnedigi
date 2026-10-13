@@ -6,7 +6,7 @@
            let lause=`SELECT ?sõda ?sõdaLabel (COUNT(*) as ?kogus) {
                 ?isik wdt:P27 wd:${riik.value}.
                 ?isik wdt:P106 wd:${amet.value}.
-                ?isik wdt:P69 ?sõda.
+                ?isik wdt:P607 ?sõda.
                 SERVICE wikibase:label {
                   bd:serviceParam wikibase:language "et,en".
                 } 
