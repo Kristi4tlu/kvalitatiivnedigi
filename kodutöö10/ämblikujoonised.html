@@ -31,21 +31,30 @@
   // Pea ja keha asukoht
   let peaY = y - keha - pea;
 
-  // Ämbliku jalad
-  for (let i = 0; i < jalad; i++) {
-    let nurk = 2 * Math.PI * i / jalad;
+ // Ämbliku jalad
+for (let i = 0; i < jalad; i++) {
 
-    let x1 = x + Math.cos(nurk) * keha;
-    let y1 = y + Math.sin(nurk) * keha;
+  // Määrame, kummale poole jalg läheb
+  let pool = i % 2 === 0 ? -1 : 1;
 
-    let x2 = x + Math.cos(nurk) * (keha + jalaPikkus);
-    let y2 = y + Math.sin(nurk) * (keha + jalaPikkus);
+  // Määrame jalgade kõrguse
+  let koht = Math.floor(i / 2);
 
-    g.beginPath();
-    g.moveTo(x1, y1);
-    g.lineTo(x2, y2);
-    g.stroke();
-  }
+  let nihe = (koht - Math.floor(jalad / 4)) * 15;
+
+  // Jala alguspunkt keha küljes
+  let x1 = x + pool * keha * 0.85;
+  let y1 = y + nihe;
+
+  // Jala lõpp-punkt
+  let x2 = x + pool * (keha + jalaPikkus);
+  let y2 = y + nihe + (koht - 1.5) * 10;
+
+  g.beginPath();
+  g.moveTo(x1, y1);
+  g.lineTo(x2, y2);
+  g.stroke();
+}
 
   // Ämbliku keha
   g.beginPath();
