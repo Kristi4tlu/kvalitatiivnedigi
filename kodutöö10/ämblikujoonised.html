@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Ämblikud</title>
+
+    <script>
+      let g;
+      let ilmaandmed = [];
+      let skript;
+
+      // Andmete laadimine Google Spreadsheetist
+      function uuendaAndmed() {
+        if (skript) {
+          skript.remove();
+        }
+
+        skript = document.createElement("script");
+        skript.src = "https://script.google.com/macros/s/AKfycbxBnD1k5ondfPw-cQahgN2twHtXIOnuJg2DNP2-2SvY1z9yz8Uu2TGJNWxc6YIzpe04/exec";
+
+        document.body.appendChild(skript);
+      }
+
+      // Google Spreadsheetist saadud andmete vastuvõtmine
+      function saadudAndmed(andmed) {
+        ilmaandmed = andmed;
+        joonista();
+      }
+
+  
+      function amblik(x, y, pea, keha, jalad, jalaPikkus) {
+
+  // Pea ja keha asukoht
+  let peaY = y - keha - pea;
+
+  // Ämbliku jalad
+  for (let i = 0; i < jalad; i++) {
+    let nurk = 2 * Math.PI * i / jalad;
+
+    let x1 = x + Math.cos(nurk) * keha;
+    let y1 = y + Math.sin(nurk) * keha;
+
+    let x2 = x + Math.cos(nurk) * (keha + jalaPikkus);
+    let y2 = y + Math.sin(nurk) * (keha + jalaPikkus);
+
+    g.beginPath();
+    g.moveTo(x1, y1);
+    g.lineTo(x2, y2);
+    g.stroke();
+  }
+
+  // Ämbliku keha
+  g.beginPath();
+  g.arc(x, y, keha, 0, 2 * Math.PI);
+  g.stroke();
+
+  // Ämbliku pea
+  g.beginPath();
+  g.arc(x, peaY, pea, 0, 2 * Math.PI);
+  g.stroke();
+
+  // Ämbliku silmad
+  g.beginPath();
+  g.arc(x - pea / 3, peaY - pea / 4, 2, 0, 2 * Math.PI);
+  g.arc(x + pea / 3, peaY - pea / 4, 2, 0, 2 * Math.PI);
+  g.fill();
+}
+
+      // Kõikide ämblike joonistamine
+   function joonista() {
+  let tahvel = document.getElementById("tahvel");
+  g = tahvel.getContext("2d");
+
+  g.clearRect(0, 0, tahvel.width, tahvel.height);
+
+  for (let i = 0; i < ilmaandmed.length; i++) {
+    let d = ilmaandmed[i];
+
+    let x = 200 + i * 350;
+    let y = 180;
+
+    amblik(
+      x,
+      y,
+      Number(d.pea),
+      Number(d.keha),
+      Number(d.jalad),
+      Number(d.jalaPikkus)
+    );
+
+    g.font = "16px Arial";
+    g.textAlign = "center";
+    g.fillText(d.nimi, x, 300);
+  }
+}
+    </script>
+  </head>
+
+  <body>
+    <h1>Ämblikud</h1>
+
+
+    <input type="button" value="Uuenda" onclick="uuendaAndmed()" />
+
+    <br><br>
+
+    <canvas id="tahvel" width="800" height="350">
+    </canvas>
+
+  </body>
+</html>
