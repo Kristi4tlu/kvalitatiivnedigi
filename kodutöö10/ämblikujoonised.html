@@ -12,14 +12,11 @@
         if (skript) {
           skript.remove();
         }
-
         skript = document.createElement("script");
         skript.src = "https://script.google.com/macros/s/AKfycbxBnD1k5ondfPw-cQahgN2twHtXIOnuJg2DNP2-2SvY1z9yz8Uu2TGJNWxc6YIzpe04/exec?callback=saadudAndmed";
-
         document.body.appendChild(skript);
       }
 
-      // Google Spreadsheetist saadud andmete vastuvõtmine
       function saadudAndmed(andmed) {
         ilmaandmed = andmed;
         joonista();
